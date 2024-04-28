@@ -20,18 +20,18 @@ const fetchPokeData = async () => {
 const handleRequest = async(req, res) => {
 
     const pokeData = await fetchPokeData();
-    const pokemonName = decodeURI(req.url.substring(1))
+    const pokeName = decodeURI(req.url.substring(1))
 
     const pokemons = pokeData.find( pokemon => {
         
         // creamos un bucle for en el que comprobaremos todos los idiomas del pokemon
         for ( language in pokemon.name){
-            if(pokemon.name[language] === pokemonName){
+            if(pokemon.name[language] === pokeName){
                 return true
             } 
         }
         // una vez comprobado el idioma comprobamos si el ID del pokemon
-        if(pokemon.id.toString() === pokemonName){
+        if(pokemon.id.toString() === pokeName){
             return true
         }
 
@@ -56,10 +56,9 @@ const handleRequest = async(req, res) => {
         res.end(responseJSON)
 
     }else{
-
+        
         res.writeHead(404, {'Content-Type': 'text/plain'})
         res.end('El pokemon que busca no existe, introducza un nombre o id correcto')
-        
     }
 
 }
